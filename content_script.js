@@ -58,7 +58,7 @@ window.onmouseup = async function (e) {
     }
 
     // 未选中文本，不处理
-    let text = window.getSelection().toString().trim()
+    let text = window.getSelection().toString()
     if (!text) {
         return;
     }
@@ -66,6 +66,20 @@ window.onmouseup = async function (e) {
     // 翻译选中文本
     let translateText = await translate(text)
 
+    let selection = window.getSelection();
+    if (selection.rangeCount > 0) {
+        let range = selection.getRangeAt(0);
+        let container = document.createElement("div");
+        container.appendChild(range.cloneContents());
+        let selectedText = container.textContent.trim();
+        // 处理包含换行符的选中文本
+        console.log(selectedText);
+
+        show(e.pageX, e.pageY, selectedText, translateText)
+    }
+
     // 在鼠标位置显示翻译结果
-    show(e.pageX, e.pageY, text, translateText)
+    // show(e.pageX, e.pageY, text, translateText)
+
+
 }
