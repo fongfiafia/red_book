@@ -136,16 +136,16 @@ function generateTemplateClick() {
                 let emojiList = []
                 for (const match of tmpData.matchAll(emojiRegex)) {
                     emojiInfo.push({
-                        idx: match.index,
-                        emoji: match[0]
+                        "idx": match.index,
+                        "emoji": match[0]
                     })
                     emojiList.push(match[0]);   
                     emojiIndxList.push(match.index);
                 }
                 for (const match of tmpData.matchAll(dayRexgex)) {
                     emojiInfo.push({
-                        idx: match.index,
-                        emoji: match[0]
+                        "idx": match.index,
+                        "emoji": match[0]
                     })
                     emojiList.push(match[0]);
                     emojiIndxList.push(match.index);
@@ -154,7 +154,7 @@ function generateTemplateClick() {
                 // emojiInfo根据idx升序排
                 emojiInfo.sort((a, b) => a.idx - b.idx);
 
-                if (emojiInfo.length == 0) {
+                if (emojiIndxList.length == 0) {
                     if (i == 0) { // 没有任何emoji同时是第一行
                         finalHtml = "<此处写整篇博文的总结和您的一些情感>" + "<br>" // 一般在最开始一定会有一个大的总结和情感抒发
                     }
@@ -165,18 +165,16 @@ function generateTemplateClick() {
                     continue
                 }
 
-                for (let j = 0; j < emojiInfo.length; j++) {
+                for (let j = 0; j < emojiList.length; j++) {
                     // 如果两个表情紧贴，那么就紧贴不需要中间插入文本
-                    console.log(emojiInfo)
-                    let nextEmoji = emojiInfo[j + 1]
-                    if ((j < String(emojiInfo.emoji).length) && (nextEmoji.idx == String(nextEmoji.emoji).length)) {
-                        finalHtml = finalHtml + emojiInfo[j].emoji
+                    if ((j < emojiList.length) && (emojiIndxList[j + 1] == emojiList[j].length)) {
+                        finalHtml = finalHtml + emojiList[j]
                         continue
                     }
                     if (i == 0) {
-                        finalHtml = finalHtml + String(emojiInfo[j].emoji) + "<此处写整篇博文的总结和您的一些情感>" // 一般在最开始一定会有一个大的总结和情感抒发 -- 有emoji同时又是第一行
+                        finalHtml = finalHtml + emojiList[j] + "<此处写整篇博文的总结和您的一些情感>" // 一般在最开始一定会有一个大的总结和情感抒发 -- 有emoji同时又是第一行
                     } else {
-                        finalHtml = finalHtml + String(emojiInfo[j].emoji) + "<此处写小标题>"
+                        finalHtml = finalHtml + emojiList[j] + "<此处写小标题>"
                     }
                     hasEmojiIdx = i
                 }
