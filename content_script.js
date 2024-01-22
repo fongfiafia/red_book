@@ -114,66 +114,77 @@ function generateTemplateClick() {
         let firstSpanElement = detailDescElement.querySelector("span");
         if (firstSpanElement) {
             console.log(firstSpanElement);
-            let finalHtml = ""
+            let finalHtml = "" // 一般在最开始一定会有一个大的总结和情感抒发
             let processData = firstSpanElement.innerHTML
             let dataExcludeBr = processData.split("<br>")
             let brCnt = dataExcludeBr.length - 1;
             console.log(brCnt);
-            for (let i = 0; i < brCnt; i++) {
-                let tmpData = dataExcludeBr[i]
-                // let finalHtml = ""
-                // let tmpData = "📍DAY5:峨眉山一日游"
-                // 特化逻辑
-                if (tmpData.length == 1) {
+            let hasEmojiIdx = -1
+            for (let i = 0; i < 2; i++) {
+                // let tmpData = dataExcludeBr[i]
+                let finalHtml = ""
+                let tmpData = "📍DAY6:峨眉-乌木博物馆-乐山大佛-返回成都🏠"
+
+                // 特化逻辑 如果是一个字符的一般是分割符
+                if (tmpData.length == 1) {  
                     finalHtml = finalHtml + tmpData + "<br>"
                     continue
                 }
 
-                let emojiIndxList = [];
+                let emojiInfo = []
+                let emojiIndxList = []; // 2 8 4 -- 2 4 8 
                 let emojiList = []
                 for (const match of tmpData.matchAll(emojiRegex)) {
-                    emojiList.push(match[0]);
+                    emojiInfo.push({
+                        idx: match.index,
+                        emoji: match[0]
+                    })
+                    emojiList.push(match[0]);   
                     emojiIndxList.push(match.index);
                 }
                 for (const match of tmpData.matchAll(dayRexgex)) {
+                    emojiInfo.push({
+                        idx: match.index,
+                        emoji: match[0]
+                    })
                     emojiList.push(match[0]);
                     emojiIndxList.push(match.index);
                 }
 
-                console.log(emojiIndxList);
-                // 如果两个表情紧贴，那么就紧贴不需要中间插入 todo
-                for (let j = 0; j < emojiList.length; j++) {
-                    console.log(emojiList[j].length);
-                    if ((j < emojiList.length) && (emojiIndxList[j + 1] == emojiList[j].length)) {
-                        finalHtml = finalHtml + emojiList[j]
+                // emojiInfo根据idx升序排
+                emojiInfo.sort((a, b) => a.idx - b.idx);
+
+                if (emojiInfo.length == 0) {
+                    if (i == 0) { // 没有任何emoji同时是第一行
+                        finalHtml = "<此处写整篇博文的总结和您的一些情感>" + "<br>" // 一般在最开始一定会有一个大的总结和情感抒发
+                    }
+                    // 没有表情纯纯的文本，那就一般就是主要的文案
+                    if (i > 0 && i - 1 == hasEmojiIdx) {
+                        finalHtml = finalHtml + "此处写小标题对应内容" + "<br>"
+                    }
+                    continue
+                }
+
+                for (let j = 0; j < emojiInfo.length; j++) {
+                    // 如果两个表情紧贴，那么就紧贴不需要中间插入文本
+                    console.log(emojiInfo)
+                    let nextEmoji = emojiInfo[j + 1]
+                    if ((j < String(emojiInfo.emoji).length) && (nextEmoji.idx == String(nextEmoji.emoji).length)) {
+                        finalHtml = finalHtml + emojiInfo[j].emoji
                         continue
                     }
-                    finalHtml = finalHtml + emojiList[j] + "<--替换成您的文案-->"
+                    if (i == 0) {
+                        finalHtml = finalHtml + String(emojiInfo[j].emoji) + "<此处写整篇博文的总结和您的一些情感>" // 一般在最开始一定会有一个大的总结和情感抒发 -- 有emoji同时又是第一行
+                    } else {
+                        finalHtml = finalHtml + String(emojiInfo[j].emoji) + "<此处写小标题>"
+                    }
+                    hasEmojiIdx = i
                 }
                 finalHtml = finalHtml + "<br>"
-                // console.log(finalHtml)
-
-                // let matches = emojiRegex.exec(tmpData)
-                // if (!matches) {
-                //     continue
-                // }
-
-                // let tmpReplaceData = ""
-                // console.log(matches);
-                // for (let j = 0; j < matches.length; j++) {
-                //     tmpReplaceData = tmpReplaceData + matches[j] + "替换成您的文案"
-                // }
-                // console.log(tmpReplaceData);
-                // finalHtml = finalHtml + tmpReplaceData + "<br>"
+                console.log(finalHtml);
             }
 
             console.log(finalHtml);
-
-            // const tempElement = document.createElement('div');
-            // tempElement.innerHTML = firstSpanElement.innerHTML;
-            // 处理虚拟DOM
-            // processText(tempElement);
-            // console.log(tempElement);
 
             // 找到class是hh_btn的元素
             const hhBtn = document.querySelector('.hh_btn');
@@ -186,25 +197,25 @@ function generateTemplateClick() {
                 // 设置卡片内容
                 container.innerHTML = `
                           <div class="card" style="width: 280px; height: 400px; position: relative; margin-top: auto; margin-bottom: auto ; border-radius: 20px; position: absolute; top: 50%; transform: translate(-50%, -50%); left: 46%">
-    <div class="card-body">
-      <h5 class="card-title" style="justify-content:space-between; display: flex; align-items: center;">
-        <div>同款模板</div>
-        <div>
-          <button type="button" class="btn btn-primary btn-sm"
-            style="background-color: #FF2E4D; border-color: #FF2E4D;border-radius: 20px; opacity: 0.85;">复制
-          </button>
-        </div>
-      </h5>
-      <div style="margin-bottom: 5px;">
-        <p class="card-text" style="overflow: auto; max-height: 350px; height: 350px">
-            ${finalHtml}
-        </p>
-      </div>
-      
-      <!-- <a href=" #" class="card-link">Card link</a>
-      <a href="#" class="card-link">Another link</a> -->
-    </div>
-  </div>
+                            <div class="card-body">
+                            <h5 class="card-title" style="justify-content:space-between; display: flex; align-items: center;">
+                                <div>同款模板</div>
+                                <div>
+                                <button type="button" class="btn btn-primary btn-sm"
+                                    style="background-color: #FF2E4D; border-color: #FF2E4D;border-radius: 20px; opacity: 0.85;">复制
+                                </button>
+                                </div>
+                            </h5>
+                            <div style="margin-bottom: 5px;">
+                                <p class="card-text" style="overflow: auto; max-height: 350px; height: 350px">
+                                    ${finalHtml}
+                                </p>
+                            </div>
+                            
+                            <!-- <a href=" #" class="card-link">Card link</a>
+                            <a href="#" class="card-link">Another link</a> -->
+                            </div>
+                        </div>
                     `;
 
 

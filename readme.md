@@ -11,9 +11,11 @@ https://github.com/aneasystone/weekly-practice/tree/main
     3. 可以在控制台限制性看看效果 。
 
 
+https://www.xiaohongshu.com/explore/64549d4400000000120338c4?m_source=pinpai
+
 https://www.xiaohongshu.com/explore/6406cd9f0000000013001c47?m_source=pinpai
 
-https://www.xiaohongshu.com/explore/64549d4400000000120338c4?m_source=pinpai
+https://www.xiaohongshu.com/explore/65a5163f000000000f01d174?m_source=pinpai  -- done
 
 差不多了，就是我想能不能识别出哪些应该写标题，哪些应该写内容？ 不然就只是一个表情提取器，
 同时分段好像还是有点偏差
