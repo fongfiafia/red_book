@@ -122,11 +122,11 @@ function generateTemplateClick() {
             let hasEmojiIdx = -1
             for (let i = 0; i < brCnt; i++) {
                 let tmpData = dataExcludeBr[i]
-            // let finalHtml = ""
-            // let tmpData = "📍DAY6:峨眉-乌木博物馆-乐山大佛-返回成都🏠"
+                // let finalHtml = ""
+                // let tmpData = "📍DAY6:峨眉-乌木博物馆-乐山大佛-返回成都🏠"
 
                 // 特化逻辑 如果是一个字符的一般是分割符
-                if (tmpData.length == 1) {  
+                if (tmpData.length == 1) {
                     finalHtml = finalHtml + tmpData + "<br>"
                     continue
                 }
@@ -139,7 +139,7 @@ function generateTemplateClick() {
                         "idx": match.index,
                         "emoji": match[0]
                     })
-                    emojiList.push(match[0]);   
+                    emojiList.push(match[0]);
                     emojiIndxList.push(match.index);
                 }
                 for (const match of tmpData.matchAll(dayRexgex)) {
@@ -161,8 +161,16 @@ function generateTemplateClick() {
                         finalHtml = "<此处写整篇博文的总结和您的一些情感>" + "<br>" // 一般在最开始一定会有一个大的总结和情感抒发
                     }
                     // 没有表情纯纯的文本，那就一般就是主要的文案
-                    if (i > 0 && i - 1 == hasEmojiIdx) {
-                        finalHtml = finalHtml + "此处写小标题对应内容" + "<br>"
+                    // 我认为一航标请后面 如果没有表情那么就一定是一段对表情标题的内容
+                    if (i > 0) {
+                        if (i - 1 == hasEmojiIdx) {
+                            finalHtml = finalHtml + "此处写小标题对应文案" + "<br>"
+                        } else {
+                            console.log(finalHtml.substring(finalHtml.length - 14, finalHtml.length))
+                            if (finalHtml.substring(finalHtml.length - 14, finalHtml.length) != "此处写一些引导性文案" + "<br>") {
+                                finalHtml = finalHtml + "此处写一些引导性文案" + "<br>"
+                            }
+                        }
                     }
                     continue
                 }
