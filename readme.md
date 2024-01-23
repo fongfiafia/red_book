@@ -11,11 +11,18 @@ https://github.com/aneasystone/weekly-practice/tree/main
     3. 可以在控制台限制性看看效果 。
 
 
-https://www.xiaohongshu.com/explore/64549d4400000000120338c4?m_source=pinpai
+https://www.xiaohongshu.com/explore/64549d4400000000120338c4?m_source=pinpai -- done : 如果表情后面跟着的文字超过x于x个字符，就还是认为是标题
+高铁上海到衢州两小时。在衢州当地全程打车（几乎都是10元以内），到了开化和龙游是租车自驾，不开车的话可以从衢州坐客车下去，半小时一班车也很方便。
 
-https://www.xiaohongshu.com/explore/6406cd9f0000000013001c47?m_source=pinpai
+https://www.xiaohongshu.com/explore/6406cd9f0000000013001c47?m_source=pinpai -- done
 
 https://www.xiaohongshu.com/explore/65a5163f000000000f01d174?m_source=pinpai  -- done
 
-差不多了，就是我想能不能识别出哪些应该写标题，哪些应该写内容？ 不然就只是一个表情提取器，
+https://www.xiaohongshu.com/explore/659903a1000000000f0105d7?m_source=pinpai -- 要识别到这个
+
+https://www.xiaohongshu.com/explore/658ffcad0000000013035be5?m_source=pinpai
+
+如果整篇内容没有什么可以提取的，提示无明显模板可用。
+
+差不多了，就是我想能不能识别出哪些应该写标题，哪些应该写内容？ 不然就只是一个表情提取器， -- done
 同时分段好像还是有点偏差

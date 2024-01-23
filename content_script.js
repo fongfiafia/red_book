@@ -120,10 +120,10 @@ function generateTemplateClick() {
             let brCnt = dataExcludeBr.length - 1;
             console.log(brCnt);
             let hasEmojiIdx = -1
-            for (let i = 0; i < 2; i++) {
-                // let tmpData = dataExcludeBr[i]
-                let finalHtml = ""
-                let tmpData = "📍DAY6:峨眉-乌木博物馆-乐山大佛-返回成都🏠"
+            for (let i = 0; i < brCnt; i++) {
+                let tmpData = dataExcludeBr[i]
+            // let finalHtml = ""
+            // let tmpData = "📍DAY6:峨眉-乌木博物馆-乐山大佛-返回成都🏠"
 
                 // 特化逻辑 如果是一个字符的一般是分割符
                 if (tmpData.length == 1) {  
@@ -153,8 +153,10 @@ function generateTemplateClick() {
 
                 // emojiInfo根据idx升序排
                 emojiInfo.sort((a, b) => a.idx - b.idx);
+                console.log(emojiInfo);
 
-                if (emojiIndxList.length == 0) {
+                // rule 1
+                if (emojiInfo.length == 0) {
                     if (i == 0) { // 没有任何emoji同时是第一行
                         finalHtml = "<此处写整篇博文的总结和您的一些情感>" + "<br>" // 一般在最开始一定会有一个大的总结和情感抒发
                     }
@@ -165,16 +167,30 @@ function generateTemplateClick() {
                     continue
                 }
 
-                for (let j = 0; j < emojiList.length; j++) {
+                // emoji的拼接
+                for (let j = 0; j < emojiInfo.length; j++) {
+                    console.log(j)
                     // 如果两个表情紧贴，那么就紧贴不需要中间插入文本
-                    if ((j < emojiList.length) && (emojiIndxList[j + 1] == emojiList[j].length)) {
-                        finalHtml = finalHtml + emojiList[j]
-                        continue
+                    let needAppend = false
+                    for (let k = j + 1; k < emojiInfo.length; k++) {
+                        if (emojiInfo[k].idx == emojiInfo[k - 1].emoji.length) {
+                            finalHtml = finalHtml + emojiInfo[k - 1].emoji + emojiInfo[k].emoji
+                            needAppend = true
+                            j = k
+                        }
+                        if (k == emojiInfo.length - 1 && needAppend) {
+                            finalHtml = finalHtml + "<此处写小标题>"
+                        }
                     }
-                    if (i == 0) {
-                        finalHtml = finalHtml + emojiList[j] + "<此处写整篇博文的总结和您的一些情感>" // 一般在最开始一定会有一个大的总结和情感抒发 -- 有emoji同时又是第一行
-                    } else {
-                        finalHtml = finalHtml + emojiList[j] + "<此处写小标题>"
+                    if (i == 0) { // 很特化
+                        finalHtml = finalHtml + emojiInfo[j].emoji + "<此处写整篇博文的总结和您的一些情感>" // 一般在最开始一定会有一个大的总结和情感抒发 -- 有emoji同时又是第一行
+                    } else if (!needAppend) {
+                        if ((Number(emojiInfo[j].idx) + emojiInfo[j].emoji.length) == tmpData.length) {
+                            console.log("最后一个表情")
+                            finalHtml = finalHtml + emojiInfo[j].emoji
+                        } else {
+                            finalHtml = finalHtml + emojiInfo[j].emoji + "<此处写小标题>"
+                        }
                     }
                     hasEmojiIdx = i
                 }
