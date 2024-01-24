@@ -22,6 +22,10 @@ https://www.xiaohongshu.com/explore/659903a1000000000f0105d7?m_source=pinpai -- 
 
 https://www.xiaohongshu.com/explore/658ffcad0000000013035be5?m_source=pinpai
 
+https://www.xiaohongshu.com/explore/659903a1000000000f0105d7?m_source=pinpai shibie这个序号 
+
+https://zhuanlan.zhihu.com/p/89316809 这个很好 -- 给我一个启发 就是这个插件的名字叫做 表情模板提取，突出表情 同款
+
 如果整篇内容没有什么可以提取的，提示无明显模板可用。
 
 差不多了，就是我想能不能识别出哪些应该写标题，哪些应该写内容？ 不然就只是一个表情提取器， -- done

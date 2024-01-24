@@ -12,7 +12,8 @@
                 "*://*/*"
             ],
             "js": [
-                "content_script.js"
+                "content_script.js",
+                "node_modules/emoji-reader/kotlin/EmojiReader-lib.js"
             ],
             "css": [
                 "content_script.css"

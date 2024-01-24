@@ -4,8 +4,6 @@ var dayRexgex = /DAY\d+/g;
 
 // const combinedPattern = new RegExp(`(${dayPattern.source}|${emojiRegex.source})`, 'g');
 
-
-
 function show(x, y, text, translateText) {
     let container = document.createElement('div')
     container.innerHTML = `
