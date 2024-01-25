@@ -2,6 +2,14 @@ var emojiRegex = /[#*0-9]\uFE0F?\u20E3|[\xA9\xAE\u203C\u2049\u2122\u2139\u2194-\
 
 var dayRexgex = /DAY\d+/g;
 
+import a from 'emoji-reader';
+
+const strWithEmoji = '我是一个😃';
+const error = strWithEmoji.length; //6
+const correct = a.analyzeText(strWithEmoji); //5
+console.log(correct)
+
+
 // const combinedPattern = new RegExp(`(${dayPattern.source}|${emojiRegex.source})`, 'g');
 
 function show(x, y, text, translateText) {
