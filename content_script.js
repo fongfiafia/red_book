@@ -2,13 +2,27 @@ var emojiRegex = /[#*0-9]\uFE0F?\u20E3|[\xA9\xAE\u203C\u2049\u2122\u2139\u2194-\
 
 var dayRexgex = /DAY\d+/g;
 
-import a from 'emoji-reader';
+import EmojiReader from 'emoji-reader';
 
-const strWithEmoji = '我是一个😃';
-const error = strWithEmoji.length; //6
-const correct = a.analyzeText(strWithEmoji); //5
-console.log(correct)
+// const strWithEmoji = '我是😃一个';
+// const error = strWithEmoji.length; //6
+// const correct = EmojiReader.analyzeText(strWithEmoji); //5
+// console.log(correct)
+// let all = correct.array_hd7ov6$_0
+// let testii = []
+// // iterator correct list 
+// for (let i = 0; i < all.length; i++) {
+//     let simple = all[i]
+//     console.log(simple.isEmoji)
+//     if (simple.isEmoji) {
+//         testii.push({
+//             idx: simple.startIndex,
+//             emoji: strWithEmoji.substring(simple.startIndex, simple.startIndex + simple.length)
+//         })
+//     }
+// }
 
+// console.log(testii)
 
 // const combinedPattern = new RegExp(`(${dayPattern.source}|${emojiRegex.source})`, 'g');
 
@@ -52,13 +66,11 @@ document.head.appendChild(linkElement);
 
 // 用户点击时执行的函数
 function handleClick() {
-    console.log('User clicked!'); // 这里替换成你的逻辑
-
     const interactionContainer = document.querySelector('.interaction-container');
 
     const hh_btn = document.querySelector('.hh_btn');
-
     if (hh_btn) {
+        // 已经存在就跳过
         return
     }
 
@@ -83,26 +95,27 @@ function handleClick() {
 
         // 添加点击事件监听器
         button.addEventListener('click', function () {
-            console.log('按钮被点击了！');
             // 在这里可以添加按钮点击后的逻辑
             generateTemplateClick()
         });
 
-        button.style.marginLeft = '10px';
+        button.style.marginLeft = '7px';
 
         // 添加按钮到interaction-container的右侧
         interactionContainer.parentNode.insertBefore(button, interactionContainer.nextSibling);
     }
-
 }
 
-
 // 在每个页面上添加点击事件监听器
+// 每间隔1s执行一次document.addEventListener('click', handleClick);
+setInterval(() => {
+    handleClick();
+}, 1000);
+
 document.addEventListener('click', handleClick);
 
-
 function generateTemplateClick() {
-    // 获取文本内容并处理
+    // 获取文本内容并处理       
     const processText = (element) => {
         element.childNodes.forEach((node) => {
             if (node.nodeType === 3) { // 文本节点
@@ -138,23 +151,26 @@ function generateTemplateClick() {
                 }
 
                 let emojiInfo = []
-                let emojiIndxList = []; // 2 8 4 -- 2 4 8 
-                let emojiList = []
-                for (const match of tmpData.matchAll(emojiRegex)) {
-                    emojiInfo.push({
-                        "idx": match.index,
-                        "emoji": match[0]
-                    })
-                    emojiList.push(match[0]);
-                    emojiIndxList.push(match.index);
+
+                const analyzedText = EmojiReader.analyzeText(tmpData); //5
+                console.log(analyzedText)
+                let all = analyzedText.array_hd7ov6$_0
+                // iterator correct list 
+                for (let i = 0; i < all.length; i++) {
+                    let simple = all[i]
+                    if (simple.isEmoji) {
+                        emojiInfo.push({
+                            "idx": simple.startIndex,
+                            "emoji": tmpData.substring(simple.startIndex, simple.startIndex + simple.length)
+                        })
+                    }
                 }
+
                 for (const match of tmpData.matchAll(dayRexgex)) {
                     emojiInfo.push({
                         "idx": match.index,
                         "emoji": match[0]
                     })
-                    emojiList.push(match[0]);
-                    emojiIndxList.push(match.index);
                 }
 
                 // emojiInfo根据idx升序排
@@ -200,7 +216,6 @@ function generateTemplateClick() {
                         finalHtml = finalHtml + emojiInfo[j].emoji + "<此处写整篇博文的总结和您的一些情感>" // 一般在最开始一定会有一个大的总结和情感抒发 -- 有emoji同时又是第一行
                     } else if (!needAppend) {
                         if ((Number(emojiInfo[j].idx) + emojiInfo[j].emoji.length) == tmpData.length) {
-                            console.log("最后一个表情")
                             finalHtml = finalHtml + emojiInfo[j].emoji
                         } else {
                             finalHtml = finalHtml + emojiInfo[j].emoji + "<此处写小标题>"
@@ -213,6 +228,10 @@ function generateTemplateClick() {
             }
 
             console.log(finalHtml);
+
+            if (brCnt == 0 || hasEmojiIdx == -1) {
+                finalHtml = "没有匹配到明显的模板，不建议参考" + "<br>"
+            }
 
             // 找到class是hh_btn的元素
             const hhBtn = document.querySelector('.hh_btn');

@@ -18,11 +18,13 @@ https://www.xiaohongshu.com/explore/6406cd9f0000000013001c47?m_source=pinpai -- 
 
 https://www.xiaohongshu.com/explore/65a5163f000000000f01d174?m_source=pinpai  -- done
 
-https://www.xiaohongshu.com/explore/659903a1000000000f0105d7?m_source=pinpai -- 要识别到这个
+https://www.xiaohongshu.com/explore/659903a1000000000f0105d7?m_source=pinpai -- 要识别到这个 算了这个
 
-https://www.xiaohongshu.com/explore/658ffcad0000000013035be5?m_source=pinpai
+https://www.xiaohongshu.com/explore/658ffcad0000000013035be5?m_source=pinpai -- 算了这个
 
-https://www.xiaohongshu.com/explore/659903a1000000000f0105d7?m_source=pinpai shibie这个序号 
+https://www.xiaohongshu.com/explore/659903a1000000000f0105d7?m_source=pinpai shibie这个序号  -- done
+
+https://www.xiaohongshu.com/explore/65909cbf000000001e00860f?m_source=pinpai 什么都没有的
 
 https://zhuanlan.zhihu.com/p/89316809 这个很好 -- 给我一个启发 就是这个插件的名字叫做 表情模板提取，突出表情 同款
 
@@ -33,3 +35,8 @@ https://zhuanlan.zhihu.com/p/89316809 这个很好 -- 给我一个启发 就是�
 
 npm install webpack webpack-cli --save-dev
 npx webpack --config webpack.config.js
+
+- 一个是名字
+- 一个是bug寻找
+- 一个是复制、删除实现
+- 一个是纯净复制
