@@ -26,6 +26,8 @@ https://www.xiaohongshu.com/explore/659903a1000000000f0105d7?m_source=pinpai shi
 
 https://www.xiaohongshu.com/explore/65909cbf000000001e00860f?m_source=pinpai 什么都没有的
 
+https://www.xiaohongshu.com/explore/65aa8992000000001100bd83?m_source=pinpai   ?
+
 https://zhuanlan.zhihu.com/p/89316809 这个很好 -- 给我一个启发 就是这个插件的名字叫做 表情模板提取，突出表情 同款
 
 如果整篇内容没有什么可以提取的，提示无明显模板可用。
