@@ -61,6 +61,13 @@ setInterval(() => {
 document.addEventListener('click', handleClick);
 
 function generateTemplateClick() {
+    // get class = cardContainer
+
+    var card = document.getElementById("myCard");
+    if (card) {
+        return
+    }
+
     function closeCard() {
         console.log("Card closed");
         var card = document.getElementById("myCard");
@@ -137,6 +144,10 @@ function generateTemplateClick() {
 
     let finalHtml = "" // 一般在最开始一定会有一个大的总结和情感抒发
     for (let m = 0; m < allSpan.length; m++) {
+        console.log("11" + finalHtml)
+        if (finalHtml != "没有匹配到明显的模板，不建议参考<br>" && m > 0) {
+            break
+        }
         let firstSpanElement = allSpan[m]
         console.log(firstSpanElement);
         let processData = firstSpanElement.innerHTML
@@ -235,10 +246,12 @@ function generateTemplateClick() {
 
         console.log(finalHtml);
 
-        if ((brCnt == 0 || hasEmojiIdx == -1) & m == allSpan.length - 1) {
+        if ((brCnt == 0 || hasEmojiIdx == -1)) {
             finalHtml = "没有匹配到明显的模板，不建议参考" + "<br>"
         }
     }
+
+
 
     console.log(finalHtml);
 
