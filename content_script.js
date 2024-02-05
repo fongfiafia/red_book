@@ -1,14 +1,9 @@
 import EmojiReader from 'emoji-reader';
-import confetti from 'canvas-confetti';
+import JSConfetti from 'js-confetti'
+
+const jsConfetti = new JSConfetti()
 
 var dayRexgex = /DAY\d+/g;
-
-// 设置 link 元素的属性
-const linkElement = document.createElement('link');
-linkElement.rel = 'stylesheet';
-linkElement.href = 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css';
-// 将 link 元素添加到 head 中
-document.head.appendChild(linkElement);
 
 // 用户点击时执行的函数
 function handleClick() {
@@ -61,8 +56,6 @@ setInterval(() => {
 document.addEventListener('click', handleClick);
 
 function generateTemplateClick() {
-    // get class = cardContainer
-
     var card = document.getElementById("myCard");
     if (card) {
         return
@@ -94,23 +87,18 @@ function generateTemplateClick() {
         copySuccessMessage.style.display = "block";
 
         // 获取元素在页面中的位置信息
-        var rect = copySuccessMessage.getBoundingClientRect();
+        // var rect = copySuccessMessage.getBoundingClientRect();
 
         // 计算中心点的坐标
-        var centerX = rect.left + rect.width / 2 + window.scrollX;
-        var centerY = rect.top + rect.height / 2 + window.scrollY;
-        var x = (centerX - rect.left) / rect.width;
-        var y = (centerY - rect.top) / rect.height;
+        // var centerX = rect.left + rect.width / 2 + window.scrollX;
+        // var centerY = rect.top + rect.height / 2 + window.scrollY;
+        // var x = (centerX - rect.left) / rect.width;
+        // var y = (centerY - rect.top) / rect.height;
 
-        console.log("centerX: " + centerX + ", centerY: " + centerY);
-        confetti({
-            particleCount: 100,
-            spread: 360,
-            origin: {
-                x: x,
-                y: y
-            }
-        });
+        // console.log("centerX: " + centerX + ", centerY: " + centerY);
+
+
+        jsConfetti.addConfetti()
 
         // 慢慢消失
         setTimeout(function () {

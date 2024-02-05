@@ -15,6 +15,7 @@
                 "dist/main.js"
             ],
             "css": [
+                "bootstrap/self.css",
                 "content_script.css"
             ]
         }

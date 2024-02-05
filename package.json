@@ -1,7 +1,8 @@
 {
   "dependencies": {
     "canvas-confetti": "^1.9.2",
-    "emoji-reader": "^2.0.5"
+    "emoji-reader": "^2.0.5",
+    "js-confetti": "^0.12.0"
   },
   "devDependencies": {
     "webpack": "^5.90.0",
