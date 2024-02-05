@@ -2,7 +2,7 @@
     "name": "Chrome Extension Sample",
     "version": "1.0.0",
     "manifest_version": 3,
-    "description": "Chrome Extension Sample",
+    "description": "烤红薯 - 小红书爆款文案提取器",
     "action": {
         "default_popup": "popup.html"
     },
