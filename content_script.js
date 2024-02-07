@@ -249,8 +249,6 @@ function generateTemplateClick() {
     // 创建卡片容器
     const container = document.createElement('div');
 
-    // container.textContent = '我在 xgplayer-poster 上方';
-
     container.classList.add('card-container');
 
     // 设置卡片内容

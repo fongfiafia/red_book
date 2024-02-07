@@ -3,8 +3,10 @@
     "version": "1.0.0",
     "manifest_version": 3,
     "description": "烤红薯 - 小红书爆款文案提取器",
-    "action": {
-        "default_popup": "popup.html"
+    "icons": {
+        "128": "img/128.png",
+        "16": "img/16.png",
+        "48": "img/48.png"
     },
     "content_scripts": [
         {
