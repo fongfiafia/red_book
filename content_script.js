@@ -61,8 +61,9 @@ function generateTemplateClick() {
         return
     }
 
+    let pureHtml = ""
+
     function closeCard() {
-        console.log("Card closed");
         var card = document.getElementById("myCard");
         if (card) {
             // 从其父元素中移除 card 元素
@@ -71,7 +72,6 @@ function generateTemplateClick() {
     }
 
     function copyContent() {
-        console.log("Copying content");
         var textToCopy = document.getElementById("copyText").innerText;
         var tempInput = document.createElement("textarea");
         tempInput.value = textToCopy;
@@ -80,23 +80,8 @@ function generateTemplateClick() {
         document.execCommand("copy");
         document.body.removeChild(tempInput);
 
-        console.log("Copied text: " + textToCopy);
-
-
         var copySuccessMessage = document.getElementById("copySuccessMessage");
         copySuccessMessage.style.display = "block";
-
-        // 获取元素在页面中的位置信息
-        // var rect = copySuccessMessage.getBoundingClientRect();
-
-        // 计算中心点的坐标
-        // var centerX = rect.left + rect.width / 2 + window.scrollX;
-        // var centerY = rect.top + rect.height / 2 + window.scrollY;
-        // var x = (centerX - rect.left) / rect.width;
-        // var y = (centerY - rect.top) / rect.height;
-
-        // console.log("centerX: " + centerX + ", centerY: " + centerY);
-
 
         jsConfetti.addConfetti()
 
@@ -106,18 +91,26 @@ function generateTemplateClick() {
         }, 800); // 2秒后隐藏
     }
 
-    // 获取文本内容并处理       
-    const processText = (element) => {
-        element.childNodes.forEach((node) => {
-            if (node.nodeType === 3) { // 文本节点
-                const emojiRegex = regex;
-                const replacedText = node.nodeValue.replace(/[^<>&\n]+/g, (m) => (emojiRegex.test(m) ? m : '替换成您的文案'));
-                node.replaceWith(replacedText);
-            } else if (node.nodeType === 1) { // 元素节点
-                processText(node);
-            }
-        });
-    };
+    function copyPureContent() {
+        var replacedStr = pureHtml.replace(/<br>/g, "\n");
+        var textToCopy = replacedStr
+        var tempInput = document.createElement("textarea");
+        tempInput.value = textToCopy;
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        document.execCommand("copy");
+        document.body.removeChild(tempInput);
+
+        var copySuccessMessage = document.getElementById("copySuccessMessage");
+        copySuccessMessage.style.display = "block";
+
+        jsConfetti.addConfetti()
+
+        // 慢慢消失
+        setTimeout(function () {
+            copySuccessMessage.style.display = "none";
+        }, 800); // 2秒后隐藏
+    }
 
     let detailDescElement = document.querySelector("#detail-desc");
 
@@ -132,25 +125,25 @@ function generateTemplateClick() {
 
     let finalHtml = "" // 一般在最开始一定会有一个大的总结和情感抒发
     for (let m = 0; m < allSpan.length; m++) {
-        console.log("11" + finalHtml)
         if (finalHtml != "没有匹配到明显的模板，不建议参考<br>" && m > 0) {
             break
         }
         let firstSpanElement = allSpan[m]
-        console.log(firstSpanElement);
+        // console.log(firstSpanElement);
         let processData = firstSpanElement.innerHTML
         let dataExcludeBr = processData.split("<br>")
         let brCnt = dataExcludeBr.length - 1;
-        console.log(brCnt);
+        // console.log(brCnt);
         let hasEmojiIdx = -1
         for (let i = 0; i < brCnt; i++) {
             let tmpData = dataExcludeBr[i]
-        // let finalHtml = ""
-        // let tmpData = "📍DAY6:峨眉-乌木博物馆-乐山大佛-返回成都🏠"
+            // let finalHtml = ""
+            // let tmpData = "📍DAY6:峨眉-乌木博物馆-乐山大佛-返回成都🏠"
 
             // 特化逻辑 如果是一个字符的一般是分割符
             if (tmpData.length == 1) {
                 finalHtml = finalHtml + tmpData + "<br>"
+                pureHtml = pureHtml + tmpData + "<br>"
                 continue
             }
 
@@ -158,7 +151,7 @@ function generateTemplateClick() {
 
             const analyzedText = EmojiReader.analyzeText(tmpData); //5
             // const analyzedText = "xxx"
-            console.log(analyzedText)
+            // console.log(analyzedText)
             let all = analyzedText.array_hd7ov6$_0
             // iterator correct list
             for (let i = 0; i < all.length; i++) {
@@ -180,22 +173,25 @@ function generateTemplateClick() {
 
             // emojiInfo根据idx升序排
             emojiInfo.sort((a, b) => a.idx - b.idx);
-            console.log(emojiInfo);
+            // console.log(emojiInfo);
 
             // rule 1
             if (emojiInfo.length == 0) {
                 if (i == 0) { // 没有任何emoji同时是第一行
                     finalHtml = "<此处写整篇博文的总结和您的一些情感>" + "<br>" // 一般在最开始一定会有一个大的总结和情感抒发
+                    pureHtml = "<br>" // 一般在最开始一定会有一个大的总结和情感抒发
                 }
                 // 没有表情纯纯的文本，那就一般就是主要的文案
                 // 我认为一航标请后面 如果没有表情那么就一定是一段对表情标题的内容
                 if (i > 0) {
                     if (i - 1 == hasEmojiIdx) {
                         finalHtml = finalHtml + "此处写小标题对应文案" + "<br>"
+                        pureHtml = pureHtml + "" + "<br>"
                     } else {
                         console.log(finalHtml.substring(finalHtml.length - 14, finalHtml.length))
                         if (finalHtml.substring(finalHtml.length - 14, finalHtml.length) != "此处写一些引导性文案" + "<br>") {
                             finalHtml = finalHtml + "此处写一些引导性文案" + "<br>"
+                            pureHtml = pureHtml + "" + "<br>"
                         }
                     }
                 }
@@ -204,17 +200,19 @@ function generateTemplateClick() {
 
             // emoji的拼接
             for (let j = 0; j < emojiInfo.length; j++) {
-                console.log(j)
+                // console.log(j)
                 // 如果两个表情紧贴，那么就紧贴不需要中间插入文本
                 let needAppend = false
                 for (let k = j + 1; k < emojiInfo.length; k++) {
                     if (emojiInfo[k].idx == emojiInfo[k - 1].emoji.length) {
                         finalHtml = finalHtml + emojiInfo[k - 1].emoji + emojiInfo[k].emoji
+                        pureHtml = pureHtml + emojiInfo[k - 1].emoji + emojiInfo[k].emoji
                         needAppend = true
                         j = k
                     }
                     if (k == emojiInfo.length - 1 && needAppend) {
                         finalHtml = finalHtml + "<此处写小标题>"
+                        pureHtml = pureHtml + ""
                     }
                 }
                 if (i == 0) { // 很特化
@@ -222,26 +220,28 @@ function generateTemplateClick() {
                 } else if (!needAppend) {
                     if ((Number(emojiInfo[j].idx) + emojiInfo[j].emoji.length) == tmpData.length) {
                         finalHtml = finalHtml + emojiInfo[j].emoji
+                        pureHtml = pureHtml + emojiInfo[j].emoji
                     } else {
                         finalHtml = finalHtml + emojiInfo[j].emoji + "<此处写小标题>"
+                        pureHtml = pureHtml + emojiInfo[j].emoji
                     }
                 }
                 hasEmojiIdx = i
             }
             finalHtml = finalHtml + "<br>"
-            console.log(finalHtml);
+            pureHtml = pureHtml + "<br>"
+            // console.log(finalHtml);
         }
 
-        console.log(finalHtml);
+        // console.log(finalHtml);
 
         if ((brCnt == 0 || hasEmojiIdx == -1)) {
             finalHtml = "没有匹配到明显的模板，不建议参考" + "<br>"
+            pureHtml = "没有匹配到明显的模板，不建议参考" + "<br>"
         }
     }
 
-
-
-    console.log(finalHtml);
+    // console.log(finalHtml);
 
     // 找到class是hh_btn的元素
     const noteContainer = document.getElementById('noteContainer');
@@ -260,6 +260,9 @@ function generateTemplateClick() {
                         <div>
                             <button type="button" class="btn btn-primary btn-sm" id="copybtn"
                                 style="background-color: #FF2E4D; border-color: #FF2E4D;border-radius: 20px; opacity: 0.85; height: 30px;">复制
+                            </button>
+                             <button type="button" class="btn btn-primary btn-sm" id="pureCopybtn"
+                                style="background-color: #FF2E4D; border-color: #FF2E4D;border-radius: 20px; opacity: 0.85; height: 30px;">纯净复制
                             </button>
                             <button type="button" class="btn btn-secondary btn-sm" id="closebtn" style="border-radius: 100px; opacity: 0.85; height: 30px;">X
                             </button>
@@ -288,6 +291,9 @@ function generateTemplateClick() {
 
     let copybtn = document.getElementById("copybtn")
     copybtn.addEventListener("click", copyContent);
+
+    let pureCopybtn = document.getElementById("pureCopybtn")
+    pureCopybtn.addEventListener("click", copyPureContent);
 
     let closebtn = document.getElementById("closebtn")
     closebtn.addEventListener("click", closeCard);
