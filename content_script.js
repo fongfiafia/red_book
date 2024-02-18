@@ -16,7 +16,6 @@ function handleClick() {
     }
 
     if (interactionContainer) {
-        console.log('Interaction container found!');
         // 创建一个按钮元素
         const button = document.createElement('button');
         // 使用 Bootstrap 的按钮类
@@ -188,7 +187,7 @@ function generateTemplateClick() {
                         finalHtml = finalHtml + "此处写小标题对应文案" + "<br>"
                         pureHtml = pureHtml + "" + "<br>"
                     } else {
-                        console.log(finalHtml.substring(finalHtml.length - 14, finalHtml.length))
+                        // console.log(finalHtml.substring(finalHtml.length - 14, finalHtml.length))
                         if (finalHtml.substring(finalHtml.length - 14, finalHtml.length) != "此处写一些引导性文案" + "<br>") {
                             finalHtml = finalHtml + "此处写一些引导性文案" + "<br>"
                             pureHtml = pureHtml + "" + "<br>"
