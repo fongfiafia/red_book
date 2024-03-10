@@ -1,8 +1,8 @@
 {
-    "name": "烤红薯",
-    "version": "1.0.0",
+    "name": "小红书爆款文案提取器- 烤红薯",
+    "version": "1.0.2",
     "manifest_version": 3,
-    "description": "烤红薯 - 小红书爆款文案提取器",
+    "description": "小红书爆款文案提取器- 烤红薯",
     "icons": {
         "128": "img/128.png",
         "16": "img/16.png",
@@ -11,7 +11,7 @@
     "content_scripts": [
         {
             "matches": [
-                "*://*/*"
+                "https://*.xiaohongshu.com/*"
             ],
             "js": [
                 "dist/main.js"

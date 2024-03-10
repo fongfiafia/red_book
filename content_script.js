@@ -49,6 +49,7 @@ function handleClick() {
 // 在每个页面上添加点击事件监听器
 // 每间隔1s执行一次document.addEventListener('click', handleClick);
 setInterval(() => {
+    console.log("handleClick");
     handleClick();
 }, 1000);
 
